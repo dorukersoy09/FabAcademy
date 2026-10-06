@@ -1,11 +1,170 @@
-/* =============================================================
+{{ define "main" }}
+
+<canvas id="binary-bg" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <button class="fp-tab" data-open-fp aria-label="Open final project">
+    <span>V0 / Final project</span>
+  </button>
+
+  <div class="page">
+    <!-- HERO -->
+    <header class="hero">
+      <div>
+        <h1 class="hero-name">
+          <span id="first-name">Your</span>
+          <span class="outline" id="last-name">Name</span>
+        </h1>
+        <p class="hero-sub">
+          <span class="bolt" aria-hidden="true"></span>
+          Fab Academy <strong id="year">2026</strong> at <strong id="lab">Fab Lab Barcelona</strong>
+        </p>
+      </div>
+
+      <div class="picker">
+        <button class="picker-btn" id="picker-btn" aria-expanded="false" aria-controls="picker-list">
+          Jump to week
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+        <div class="picker-list" id="picker-list"></div>
+      </div>
+    </header>
+
+    <!-- DESKTOP WINDOW WITH SHORTCUTS -->
+    <section class="window" aria-label="Main sections">
+      <div class="window-bar">
+        <div class="ctrl" aria-hidden="true"><i></i><i></i><i></i></div>
+        <span class="path">~/fabacademy/documentation</span>
+        <span class="hazard" aria-hidden="true"></span>
+      </div>
+      <nav class="shortcuts">
+        <a class="shortcut" href="about.html">
+          <svg viewBox="0 0 32 32" fill="none" stroke-width="1.6"><circle cx="16" cy="11" r="5"/><path d="M6 28c1-6 5-9 10-9s9 3 10 9"/></svg>
+          <div><div class="shortcut-name">About me</div><div class="shortcut-desc">Who's behind the machines</div></div>
+        </a>
+        <a class="shortcut" href="#" data-open-fp>
+          <svg viewBox="0 0 32 32" fill="none" stroke-width="1.6"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="5"/><path d="M16 2v6M16 24v6M2 16h6M24 16h6"/></svg>
+          <div><div class="shortcut-name">Final project</div><div class="shortcut-desc">Concept, progress, build</div></div>
+        </a>
+        <a class="shortcut" href="#log">
+          <svg viewBox="0 0 32 32" fill="none" stroke-width="1.6"><path d="M3 8h10l3 3h13v16H3z"/><path d="M3 14h26"/></svg>
+          <div><div class="shortcut-name">Weekly log</div><div class="shortcut-desc">All assignments in order</div></div>
+        </a>
+        <a class="shortcut" href="student-agreement.html">
+          <svg viewBox="0 0 32 32" fill="none" stroke-width="1.6"><path d="M7 3h13l5 5v21H7z"/><path d="M20 3v5h5M11 17l3 3 6-7"/></svg>
+          <div><div class="shortcut-name">Student agreement</div><div class="shortcut-desc">The Fab Academy terms</div></div>
+        </a>
+      </nav>
+    </section>
+
+    <!-- WEEKLY LOG -->
+    <section class="log" id="log">
+      <div class="log-head">
+        <h2 class="log-title">Weekly log<small id="log-count"></small></h2>
+        <div class="log-nav">
+          <button id="prev" aria-label="Previous weeks">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"/></svg>
+          </button>
+          <span id="counter">01 / 19</span>
+          <button id="next" aria-label="Next weeks">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="track" id="track"></div>
+      <div class="progress"><div class="progress-fill" id="progress"></div></div>
+    </section>
+
+    <footer class="site-foot">
+      <span id="foot-name">Your Name</span>
+      <span>Built by hand, like everything else here</span>
+    </footer>
+  </div>
+
+  <!-- DETAILS VIEW -->
+  <article class="details" id="details" aria-hidden="true">
+    <div class="details-bar">
+      <button id="close-details">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"/></svg>
+        Back to index
+      </button>
+      <a id="full-page" href="#">Open full page</a>
+    </div>
+    <div class="doc">
+      <div class="doc-badge" id="d-badge">Week 00</div>
+      <h1 class="doc-title" id="d-title"></h1>
+      <p class="doc-date" id="d-date"></p>
+      <div class="media doc-hero" id="d-hero" data-label="Add a hero image for this week"></div>
+
+      <div class="doc-grid">
+        <div>
+          <section class="doc-section">
+            <h2 class="doc-h">What I did</h2>
+            <div class="doc-body" id="d-summary"></div>
+            <div class="tools" id="d-tools"></div>
+          </section>
+          <section class="doc-section">
+            <h2 class="doc-h">How it went</h2>
+            <blockquote class="reflection" id="d-reflection"></blockquote>
+          </section>
+        </div>
+        <aside>
+          <div class="side-box">
+            <h3 class="side-h">What I learned</h3>
+            <ol class="learnings" id="d-learnings"></ol>
+          </div>
+          <div class="side-box">
+            <h3 class="side-h">Specs</h3>
+            <dl class="meta" id="d-meta"></dl>
+          </div>
+        </aside>
+      </div>
+
+      <nav class="doc-foot">
+        <button id="d-prev"><small>Previous week</small><strong></strong></button>
+        <button id="d-next" class="next"><small>Next week</small><strong></strong></button>
+      </nav>
+    </div>
+  </article>
+
+  <!-- FINAL PROJECT DRAWER -->
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="details-bar">
+      <h2>Final project</h2>
+      <button id="close-drawer">
+        Close
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+    </div>
+    <div class="fp-video">
+      <div class="media" id="fp-media" data-label="Drop your final project video here"></div>
+    </div>
+    <div class="fp-text">
+      <h3 class="fp-name" id="fp-name"></h3>
+      <p class="fp-lede" id="fp-lede"></p>
+      <div class="fp-cols">
+        <div>
+          <h3>The idea</h3>
+          <p id="fp-idea"></p>
+        </div>
+        <div>
+          <h3>Build progress</h3>
+          <ul id="fp-progress"></ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /* =============================================================
        EDIT EVERYTHING HERE — the page builds itself from this data
     ============================================================= */
     const SITE = {
-      firstName: "Doruk",
-      lastName: "Ersoy",
-      lab: "Hisar School Fab Lab",
-      year: 2027
+      firstName: "Your",
+      lastName: "Name",
+      lab: "Fab Lab Barcelona",
+      year: 2026
     };
 
     const FINAL_PROJECT = {
@@ -23,11 +182,32 @@
     };
 
     // status: "done" or "pending". Leave img empty until you have a photo.
-    const dataElement = document.getElementById("fab-academy-data");
-
-const WEEKS = dataElement
-  ? JSON.parse(dataElement.textContent || "[]")
-  : [];
+    const WEEKS = [
+      { num: "01", date: "Jan 21 – Jan 27", title: "Principles and Practices", status: "done", img: "",
+        summary: "<p>Set up my Git repository, learned the Fab Academy workflow and built this website from scratch with plain HTML, CSS and JavaScript.</p><p>Sketched a first idea for my final project.</p>",
+        tools: ["Git", "HTML", "CSS", "VS Code"],
+        reflection: "Write honestly about how the week felt: what clicked, what fought back.",
+        learnings: ["Commit small and often", "Compress images before pushing", "Documentation is part of the work"],
+        meta: { Time: "~12 h", Machines: "—", Materials: "—" } },
+      { num: "02", date: "Jan 28 – Feb 03", title: "Computer-Aided Design", status: "done", img: "" },
+      { num: "03", date: "Feb 04 – Feb 10", title: "Computer-Controlled Cutting", img: "" },
+      { num: "04", date: "Feb 11 – Feb 17", title: "Embedded Programming", img: "" },
+      { num: "05", date: "Feb 18 – Feb 24", title: "3D Scanning and Printing", img: "" },
+      { num: "06", date: "Feb 25 – Mar 03", title: "Electronics Design", img: "" },
+      { num: "07", date: "Mar 04 – Mar 10", title: "Computer-Controlled Machining", img: "" },
+      { num: "08", date: "Mar 11 – Mar 17", title: "Electronics Production", img: "" },
+      { num: "09", date: "Mar 18 – Mar 24", title: "Input Devices", img: "" },
+      { num: "10", date: "Mar 25 – Mar 31", title: "Output Devices", img: "" },
+      { num: "11", date: "Apr 01 – Apr 07", title: "Networking and Communications", img: "" },
+      { num: "12", date: "Apr 08 – Apr 14", title: "Mechanical and Machine Design", img: "" },
+      { num: "14", date: "Apr 22 – Apr 28", title: "Molding and Casting", img: "" },
+      { num: "15", date: "Apr 29 – May 05", title: "Interface and Application Programming", img: "" },
+      { num: "16", date: "May 06 – May 12", title: "System Integration", img: "" },
+      { num: "17", date: "May 13 – May 19", title: "Wildcard Week", img: "" },
+      { num: "18", date: "May 20 – May 26", title: "Applications and Implications", img: "" },
+      { num: "19", date: "May 27 – Jun 02", title: "Invention and Intellectual Property", img: "" },
+      { num: "20", date: "Jun 03 – Jun 09", title: "Final Project Requirements", img: "" }
+    ];
 
     /* ============================================================= */
     const $ = (id) => document.getElementById(id);
@@ -46,8 +226,8 @@ const WEEKS = dataElement
     }
 
     // --- site text
-    $("Doruk").textContent = SITE.firstName;
-    $("Ersoy").textContent = SITE.lastName;
+    $("first-name").textContent = SITE.firstName;
+    $("last-name").textContent = SITE.lastName;
     $("lab").textContent = SITE.lab;
     $("year").textContent = SITE.year;
     $("foot-name").textContent = `${SITE.firstName} ${SITE.lastName} · ${SITE.lab} · ${SITE.year}`;
@@ -226,3 +406,6 @@ const WEEKS = dataElement
       addEventListener("resize", resize);
       if (reduce) { for (let k = 0; k < 120; k++) frame(); } else frame();
     })();
+  </script>
+
+{{ end }}
