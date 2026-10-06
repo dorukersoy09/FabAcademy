@@ -158,27 +158,26 @@
 
   <!-- Hugo-generated documentation data -->
   <script id="fab-academy-data" type="application/json">
-    {{ $weeks := slice }}
+{{ $weeks := slice }}
 
-    {{ range sort (where .Site.RegularPages "Section" "assignments") "Params.week" }}
-      {{ $week := dict
-        "num" (printf "%02d" .Params.week)
-        "date" (.Date.Format "Jan 02, 2006")
-        "title" .Title
-        "status" (.Params.status | default "pending")
-        "img" (.Params.image | default "")
-        "summary" .Content
-        "tools" (.Params.tools | default (slice))
-        "reflection" (.Params.reflection | default "")
-        "learnings" (.Params.learnings | default (slice))
-        "meta" (.Params.meta | default (dict))
-        "page" .RelPermalink
-      }}
+{{ range sort (where .Site.RegularPages "Section" "assignments") "Params.week" }}
+  {{ $week := dict
+    "num" (printf "%02d" .Params.week)
+    "date" (.Date.Format "Jan 02, 2006")
+    "title" .Title
+    "status" (.Params.status | default "pending")
+    "img" (.Params.image | default "")
+    "summary" .Content
+    "tools" (.Params.tools | default (slice))
+    "reflection" (.Params.reflection | default "")
+    "learnings" (.Params.learnings | default (slice))
+    "meta" (.Params.meta | default (dict))
+    "page" .RelPermalink
+  }}
+  {{ $weeks = $weeks | append $week }}
+{{ end }}
 
-      {{ $weeks = $weeks | append $week }}
-    {{ end }}
-
-    {{ $weeks | jsonify | safeHTML }}
-  </script>
+{{ jsonify $weeks | safeJS }}
+</script>
 
 {{ end }}
