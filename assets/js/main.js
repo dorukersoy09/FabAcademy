@@ -25,9 +25,12 @@
     // status: "done" or "pending". Leave img empty until you have a photo.
     const dataElement = document.getElementById("fab-academy-data");
 
-const WEEKS = dataElement
-  ? JSON.parse(dataElement.textContent || "[]")
-  : [];
+let WEEKS = [];
+
+if (dataElement) {
+  const parsed = JSON.parse(dataElement.textContent || "[]");
+  WEEKS = typeof parsed === "string" ? JSON.parse(parsed) : parsed;
+}
 
     /* ============================================================= */
     const $ = (id) => document.getElementById(id);
@@ -46,8 +49,8 @@ const WEEKS = dataElement
     }
 
     // --- site text
-    $("Doruk").textContent = SITE.firstName;
-    $("Ersoy").textContent = SITE.lastName;
+    $("first-name").textContent = SITE.firstName;
+    $("last-name").textContent = SITE.lastName;
     $("lab").textContent = SITE.lab;
     $("year").textContent = SITE.year;
     $("foot-name").textContent = `${SITE.firstName} ${SITE.lastName} · ${SITE.lab} · ${SITE.year}`;
